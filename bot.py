@@ -11,9 +11,10 @@ bot = telebot.TeleBot('6576429362:AAHqaI6T9DnEC4vfKeQmM-lcnfZWK8079ss', parse_mo
 def handle_start(message):
     if checkUser(message.from_user.username):
         chat_id = message.chat.id
-        saveChatId(chat_id)
-        bot.send_message(chat_id, "Привет! Я буду делится самыми свежими офферами\n"
-                                  "Так же, если ты пользуешься нашими прилами, я скажу, если какая-то из прил забанится")
+        if str(chat_id) not in getIDs():
+            saveChatId(chat_id)
+            bot.send_message(chat_id, "Привет! Я буду делится самыми свежими офферами\n"
+                                      "Так же, если ты пользуешься нашими прилами, я скажу, если какая-то из прил забанится")
     else:
         chat_id = message.chat.id
         bot.send_message(chat_id, 'Not accessed !')
