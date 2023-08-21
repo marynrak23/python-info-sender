@@ -1,5 +1,5 @@
 
 
 def getIDs():
-    with open("chat_ids.txt", 'r') as file:
+    with open("chat_ids", 'r') as file:
         return file.read().split()
