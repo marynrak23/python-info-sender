@@ -24,7 +24,7 @@ def getApps():
         })
 
     changed_names = []
-    with open('/Users/darkside/Desktop/python-info-sender/helpers/apps.json', 'r') as file:
+    with open('helpers/apps.json', 'r') as file:
         file_data = json.load(file)
         for item in file_data:
             name = item['name']
@@ -36,7 +36,7 @@ def getApps():
                     changed_names.append(name)
                     break
 
-    with open('/Users/darkside/Desktop/python-info-sender/helpers/apps.json', 'w') as file:
+    with open('helpers/apps.json', 'w') as file:
         json.dump(apps_data, file, ensure_ascii=False, indent=4)
 
     return changed_names
