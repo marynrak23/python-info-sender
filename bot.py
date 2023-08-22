@@ -7,6 +7,7 @@ from helpers.ids_getter import getIDs
 from helpers.check_user import checkUser
 from helpers.apps_ids_getter import getIdsApps
 from helpers.apps_ids_saver import saveChatIdApps
+from helpers.get_nsq import getApps
 
 
 bot = telebot.TeleBot('6576429362:AAHJk4nKvNHO7aEm9K_zvDLPJzN7cP1vuJ4', parse_mode=None)
@@ -34,6 +35,8 @@ def send_message(message):
         if str(chat_id) not in chat_ids:
             saveChatIdApps(chat_id)
             bot.send_message(chat_id, 'Прилы подключены')
+        else:
+            bot.send_message(chat_id, "Прилы уже подключены")
 
 
 @bot.message_handler(commands=['delete'])
@@ -81,12 +84,17 @@ def handle_photos(message):
 
 def send_periodic_messages():
     while True:
-        for chat_id in getIDs():
-            bot.send_message(chat_id, "Это периодическое сообщение.")
-        sleep(40)
+        apps_chat_id = getIdsApps()
+        banned_apps = getApps()
+        print(banned_apps)
+        print(apps_chat_id)
+        for chat_id in apps_chat_id:
+            for item in banned_apps:
+                bot.send_message(chat_id, f"Приложение {item} забанено")
+        sleep(3600)
 
 
-# threading.Thread(target=send_periodic_messages).start()
+threading.Thread(target=send_periodic_messages).start()
 
 bot.infinity_polling()
 
