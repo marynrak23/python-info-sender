@@ -10,7 +10,7 @@ def getApps():
     }
     response = requests.get(url, headers=headers)
     for item in response.json():
-        if item['newMark'] or item['newBan']:
+        if item['mark'] or item['status'] == 'banned':
             print(item)
 
 
